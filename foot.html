@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="http://g.alicdn.com/sj/dpl/1.5.1/css/sui.min.css">
+	<link rel="stylesheet" type="text/css" href="http://g.alicdn.com/sj/dpl/1.5.1/css/sui-append.min.css">
+	<link rel="stylesheet" type="text/css" href="css/default.css">
+	<style>
+		#mybody{
+			/*box-shadow 属性向框添加一个或多个阴影。*/
+			box-shadow:2px 2px 5px #000,-2px -2px 5px #000;
+			animation: myfirst 2s;
+			/*-webkit-animation:myfirst 2s;*/
+		}
+		/*通过 @keyframes 规则，您能够创建动画*/
+		@keyframes myfirst{
+			/*transform 属性向元素应用 2D 或 3D 转换。该属性允许我们对元素进行旋转、缩放、移动或倾斜。*/
+			/*rotate(angle)	定义 2D 旋转，在参数中规定角度。*/
+			/*scale(x,y)	定义 2D 缩放转换。*/
+			from {transform:rotate(15deg) scale(0.75); opacity:0};
+			to {transform:rotate(0deg) scale(1); opacity:1};
+		}
+		.sui-container{
+		    width: 1000px;
+		    height: 630px;
+		    border: 1px solid skyblue;
+		    margin: 100px auto;
+		    overflow: hidden;
+		}
+		.sidebar{
+			height: 570px;
+			border-right: 1px solid skyblue;
+		}
+		.my-head{
+			background: pink;
+			font-weight: bold;
+		}
+		.userinfor{
+			margin-left: 710px;
+			margin-top:-40px;
+			font-size: 13px;
+		}
+
+		.sui-right{
+		    width: 850px;
+		    height: 400px;
+		    margin-left: 190px;
+		}
+		.sui-right li{
+			float: left;
+			width: 250px;
+			height: 250px;
+			margin-left: 100px;
+		}
+		.sui-right li img{
+			width: 250px;
+			height: 130px;
+			border-bottom: 8px solid red;
+		}
+		.sui-right li img:hover{
+			width: 260px;
+			height: 150px;
+			border-bottom:none;
+		}
+		.sui-right li p{
+			margin-top: 5px;
+		}
+		.sui-right li span{
+			color: orange;
+		}
+		.sui-right .title{
+			display: block;
+			font-weight: bold;
+			color: black;
+			font-size: 15px;
+			margin-top: 10px;
+		}
+</style>
+</head>
+<body>
+	<div class="sui-container" id="mybody">
+		<div class="my-head">网络投票后台
+			<div class="box">
+	<ul class="menu">
+		<li class="level1">
+			<a href="#none">添加候选人</a>
+		</li>
+		<li class="level1">
+			<a href="#none">候选人列表</a>
+		</li>
+	</ul>
+</div>
+		</div>
+
+
+</body>
+</html>
+<script src=" http://g.alicdn.com/sj/lib/jquery.min.js"></script>
+<script src=" http://g.alicdn.com/sj/dpl/1.5.1/js/sui.min.js"></script>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+document.cookie="name=one";
+console.log(document.cookie);
+//等待dom元素加载完毕.
+$(document).ready(function(){
+	$(".level1 > a").click(function(){
+		$(this).addClass("current")   //给当前元素添加"current"样式
+		.next().show("fast")                //下一个元素显示
+		.parent().siblings().children("a").removeClass("current")        //父元素的兄弟元素的子元素<a>移除"current"样式
+		.next().hide("fast");//它们的下一个元素隐藏
+		//找到a的父元素<li>，获取其在兄弟元素中的序号，保存到cookie中。跳转到其他页面后，
+		//在读取这个cookie，就知道是哪个<li>下面的菜单处于打开状态。
+		document.cookie = "menuState="+$(this).parent().index()
+
+		return false;
+	});
+});
+//读取菜单状态cookie
+//用正则表达式
+var menuState = getCookie("menuState");
+$(".box .menu>li").eq(menuState).find("ul").show();
+function getCookie(name)
+{
+	var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+	if(arr=document.cookie.match(reg))
+	return unescape(arr[2]);
+	else
+	return null;
+}
+
+
+console.log(document.cookie);
+</script>
